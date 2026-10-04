@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
-import { cards, pricesUpdated } from './data'
+import { cards, exchange, pricesUpdated } from './data'
+import { currencies, useCurrency } from './currency'
 import { useCollection } from './hooks/useCollection'
 import { ProgressHeader } from './components/ProgressHeader'
 import { CardTile } from './components/CardTile'
@@ -36,6 +37,7 @@ export default function App() {
   const [inspecting, setInspecting] = useState<Card | null>(null)
   const [toast, setToast] = useState<string | null>(null)
   const fileInput = useRef<HTMLInputElement>(null)
+  const { currency, setCurrency } = useCurrency()
 
   const flash = (msg: string) => {
     setToast(msg)
@@ -72,7 +74,7 @@ export default function App() {
 
   return (
     <div className="mx-auto max-w-7xl px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-16 sm:px-6">
-      <header className="mb-5 flex items-center justify-between gap-3">
+      <header className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-extrabold tracking-tight sm:text-3xl">
             Shinji Kanda <span className="text-zinc-500">Collection</span>
@@ -80,6 +82,23 @@ export default function App() {
           <p className="text-sm text-zinc-500">Every physical card, English &amp; Japanese</p>
         </div>
         <div className="flex gap-2">
+          <label className="relative">
+            <span className="sr-only">Currency</span>
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              className="appearance-none rounded-xl border border-line bg-surface py-2 pr-7 pl-3 text-sm font-medium text-zinc-300 hover:bg-white/8 focus:border-accent focus:outline-none"
+            >
+              {currencies.map((c) => (
+                <option key={c} value={c}>
+                  {c}
+                </option>
+              ))}
+            </select>
+            <svg viewBox="0 0 20 20" fill="currentColor" className="pointer-events-none absolute top-1/2 right-2 size-4 -translate-y-1/2 text-zinc-500" aria-hidden>
+              <path d="M5.3 7.3a1 1 0 0 1 1.4 0L10 10.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4Z" />
+            </svg>
+          </label>
           <button
             type="button"
             onClick={exportBackup}
@@ -169,7 +188,8 @@ export default function App() {
       </main>
 
       <footer className="mt-16 text-center text-xs text-zinc-600">
-        Tap a card to mark it collected · Prices: Cardmarket trend (EUR), updated {pricesUpdated.toLocaleDateString()} · Progress is saved on this device
+        Tap a card to mark it collected · Prices: Cardmarket trend, updated {pricesUpdated.toLocaleDateString()}
+        {currency !== 'EUR' && <> · converted from EUR at ECB rate of {new Date(exchange.date).toLocaleDateString()}</>} · Progress is saved on this device
         <br />
         Card images via Limitless TCG. Pokémon and card artwork © Nintendo, Creatures, GAME FREAK, The Pokémon Company.
       </footer>

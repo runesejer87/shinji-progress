@@ -14,6 +14,7 @@ import sharp from 'sharp'
 const ROOT = path.resolve(import.meta.dirname, '..')
 const ARTIST = '!artist:shinji_kanda' // exact-match artist search on Limitless
 const UA = { 'User-Agent': 'Mozilla/5.0 (shinji-progress card builder)' }
+const CURRENCIES = ['USD', 'GBP', 'DKK', 'SEK', 'NOK', 'CHF', 'JPY', 'CAD', 'AUD']
 const SKIP_IMAGES = process.argv.includes('--skip-images')
 
 // Highest first. Keys are lowercase rarity names from Limitless / TCGdex.
@@ -106,6 +107,19 @@ async function tcgdexPrice(card) {
   return value ? { priceEur: value, priceSource: 'cardmarket', tcgdexRarity: data.rarity } : null
 }
 
+// ECB reference rates (EUR base). Falls back to the previously committed rates.
+async function exchangeRates() {
+  try {
+    const data = await get(`https://api.frankfurter.dev/v1/latest?base=EUR&symbols=${CURRENCIES.join(',')}`, { json: true })
+    return { date: data.date, base: 'EUR', rates: { EUR: 1, ...data.rates } }
+  } catch (err) {
+    console.warn(`  ! exchange rates unavailable (${err.message}) – keeping previous rates`)
+    const prev = JSON.parse(await readFile(path.join(ROOT, 'src/data/cards.json'), 'utf8').catch(() => '{}'))
+    if (prev.rates) return prev.rates
+    throw err
+  }
+}
+
 async function exists(p) {
   try {
     await access(p)
@@ -196,9 +210,10 @@ async function main() {
   const output = cards.map(({ uid, lang, set, setName, number, code, name, rarity, rarityRank, rarityRaw, image, priceEur, url }) => ({
     uid, lang, set, setName, number, code, name, rarity, rarityRank, rarityRaw, image, priceEur, url,
   }))
+  const rates = await exchangeRates()
   await writeFile(
     path.join(ROOT, 'src/data/cards.json'),
-    JSON.stringify({ updated: new Date().toISOString(), cards: output }, null, 2) + '\n',
+    JSON.stringify({ updated: new Date().toISOString(), rates, cards: output }, null, 2) + '\n',
   )
 
   const noPrice = output.filter((c) => c.priceEur == null).map((c) => c.uid)

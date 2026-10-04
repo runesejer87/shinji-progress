@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import type { Card } from '../types'
-import { formatEur } from '../format'
+import { useCurrency } from '../currency'
 
 interface Props {
   card: Card
@@ -10,6 +10,7 @@ interface Props {
 }
 
 export function Lightbox({ card, owned, onToggle, onClose }: Props) {
+  const { format } = useCurrency()
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
@@ -40,7 +41,7 @@ export function Lightbox({ card, owned, onToggle, onClose }: Props) {
           {card.setName} · <span className="font-mono">{card.code}</span> · {card.rarityRaw || card.rarity}
         </p>
         <p className="mt-1 text-sm">
-          Market price <span className="font-semibold text-accent-2">{formatEur(card.priceEur)}</span>
+          Market price <span className="font-semibold text-accent-2">{format(card.priceEur)}</span>
         </p>
         <div className="mt-4 flex gap-2">
           <button

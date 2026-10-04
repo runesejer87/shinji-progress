@@ -1,5 +1,5 @@
 import type { Card } from '../types'
-import { formatEur } from '../format'
+import { useCurrency } from '../currency'
 
 interface Props {
   card: Card
@@ -9,6 +9,7 @@ interface Props {
 }
 
 export function CardTile({ card, owned, onToggle, onInspect }: Props) {
+  const { format } = useCurrency()
   return (
     <figure className="group relative">
       <button
@@ -63,7 +64,7 @@ export function CardTile({ card, owned, onToggle, onInspect }: Props) {
       <div className="mt-1.5 flex items-center gap-1.5 px-0.5 text-[11px] font-medium">
         <span className="rounded-md bg-white/8 px-1.5 py-0.5 font-mono text-zinc-300">{card.code}</span>
         <span className="rounded-md bg-white/8 px-1.5 py-0.5 uppercase text-zinc-400">{card.lang === 'ja' ? 'JP' : 'EN'}</span>
-        <span className="ml-auto rounded-md bg-accent-2/12 px-1.5 py-0.5 tabular-nums text-accent-2">{formatEur(card.priceEur)}</span>
+        <span className="ml-auto rounded-md bg-accent-2/12 px-1.5 py-0.5 tabular-nums text-accent-2">{format(card.priceEur)}</span>
       </div>
     </figure>
   )

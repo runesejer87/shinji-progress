@@ -1,5 +1,5 @@
 import type { Card } from '../types'
-import { formatEur } from '../format'
+import { useCurrency } from '../currency'
 
 interface Props {
   cards: Card[]
@@ -24,6 +24,7 @@ function stats(cards: Card[], owned: Set<string>) {
 }
 
 export function ProgressHeader({ cards, owned }: Props) {
+  const { format } = useCurrency()
   const all = stats(cards, owned)
   const langs = [
     { label: 'English', s: stats(cards.filter((c) => c.lang === 'en'), owned) },
@@ -62,7 +63,7 @@ export function ProgressHeader({ cards, owned }: Props) {
         <div className="flex items-center justify-between rounded-2xl bg-white/5 px-4 py-2 text-sm sm:flex-col sm:items-start sm:justify-center sm:py-1.5">
           <span className="text-zinc-400">Collection value</span>
           <span className="font-semibold tabular-nums">
-            {formatEur(all.value)} <span className="text-zinc-500">/ {formatEur(all.totalValue)}</span>
+            {format(all.value)} <span className="text-zinc-500">/ {format(all.totalValue)}</span>
           </span>
         </div>
       </div>
