@@ -29,9 +29,7 @@ export function CardTile({ card, owned, onToggle, onInspect }: Props) {
           decoding="async"
           width={600}
           height={837}
-          className={`aspect-[600/837] w-full bg-surface object-cover transition duration-300 ${
-            owned ? '' : 'opacity-55 grayscale-[60%] group-hover:opacity-85 group-hover:grayscale-[20%]'
-          }`}
+          className="aspect-[600/837] w-full bg-surface object-cover"
         />
         {owned && (
           <span className="absolute top-2 right-2 grid size-8 place-items-center rounded-full bg-accent text-bg shadow-lg">

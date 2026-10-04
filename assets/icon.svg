@@ -26,7 +26,7 @@
     <clipPath id="cardclip"><rect x="-170" y="-238" width="340" height="476" rx="30"/></clipPath>
   </defs>
 
-  <rect width="1024" height="1024" fill="url(#bg)"/><g transform="translate(512 512) scale(1.12) translate(-512 -512)">
+  <rect width="1024" height="1024" fill="url(#bg)"/>
   <circle cx="512" cy="470" r="300" fill="#7c3aed" opacity="0.28" filter="url(#glow)"/>
 
   <!-- back card -->
@@ -55,4 +55,4 @@
   <path d="M808 246 q10 46 56 56 q-46 10 -56 56 q-10 -46 -56 -56 q46 -10 56 -56z" fill="#fde68a"/>
   <path d="M232 700 q7 32 39 39 q-32 7 -39 39 q-7 -32 -39 -39 q32 -7 39 -39z" fill="#5eead4"/>
   <path d="M262 262 q5 22 27 27 q-22 5 -27 27 q-5 -22 -27 -27 q22 -5 27 -27z" fill="#c4b5fd"/>
-</g></svg>
+</svg>

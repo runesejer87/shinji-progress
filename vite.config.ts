@@ -13,6 +13,8 @@ export default defineConfig({
       manifest: {
         name: 'Shinji Kanda Collection',
         short_name: 'Kanda',
+        id: '/',
+        start_url: '/',
         description: 'Track your Shinji Kanda Pokémon card collection',
         theme_color: '#0b0b10',
         background_color: '#0b0b10',
@@ -21,7 +23,7 @@ export default defineConfig({
         icons: [
           { src: 'icon-192.png', sizes: '192x192', type: 'image/png' },
           { src: 'icon-512.png', sizes: '512x512', type: 'image/png' },
-          { src: 'icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+          { src: 'icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
         ],
       },
       workbox: {
