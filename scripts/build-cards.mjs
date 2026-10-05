@@ -122,6 +122,9 @@ async function tcgdexCard(card, enIndex) {
 const positive = (...values) => values.find((v) => typeof v === 'number' && v > 0) ?? null
 const title = (s) => s.charAt(0).toUpperCase() + s.slice(1)
 
+// Special foils (Poké Ball / Master Ball patterns etc.) are deliberately not tracked.
+const TRACKED_VARIANTS = ['normal', 'holo', 'reverse']
+
 // Base printing first, then reverse holos, then special foils.
 function variantOrder(v) {
   const order = ['normal', 'holo', 'reverse', 'reverse-pokeball', 'reverse-masterball']
@@ -151,7 +154,9 @@ function variantPrice(v, base) {
 }
 
 function buildVariants(card, tcg) {
-  const detailed = (tcg?.variants_detailed ?? []).filter((v) => (v.size ?? 'standard') === 'standard')
+  const detailed = (tcg?.variants_detailed ?? []).filter(
+    (v) => (v.size ?? 'standard') === 'standard' && TRACKED_VARIANTS.includes(variantKey(v)),
+  )
   if (!detailed.length) {
     // No variant data: assume a single printing.
     return [{ key: card.rarityRank <= 4 ? 'holo' : 'normal', label: card.rarityRank <= 4 ? 'Holo' : 'Normal', priceEur: card.priceEur ?? null }]

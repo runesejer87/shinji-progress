@@ -8,7 +8,7 @@ A dark-themed PWA that tracks a collection of every physical Pokémon TCG card i
 
 - **Card list, rarity and scans:** [Limitless TCG](https://limitlesstcg.com), exact artist search (`!artist:shinji_kanda`). Each card's artist is checked against its card page.
 - **Prices:** Cardmarket trend price in EUR (from Limitless for English cards, [TCGdex](https://tcgdex.dev) for Japanese cards).
-- **Variants:** TCGdex `variants_detailed` (Normal, Holo, Reverse Holo, Poké Ball, Master Ball…), with a Cardmarket price per variant. The base variant uses the plain card uid; other variants are stored as `uid:variant`.
+- **Variants:** TCGdex `variants_detailed` (only Normal, Holo and Reverse Holo are tracked; Poké Ball / Master Ball patterns are skipped), with a Cardmarket price per variant. The base variant uses the plain card uid; other variants are stored as `uid:variant`.
 - **Artwork groups:** English and Japanese prints of the same illustration are grouped automatically by a perceptual hash of the art area. `artGroups` in the overrides can force a grouping.
 - **Manual fixes:** `data/overrides.json` (`exclude`, `extraCards`, `artGroups`, and per-card `cards` overrides keyed by `uid`, including a `variants` list).
 

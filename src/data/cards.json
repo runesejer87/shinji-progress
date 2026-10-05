@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-05T11:41:22.114Z",
+  "updated": "2026-10-05T11:51:27.395Z",
   "rates": {
     "date": "2026-10-02",
     "base": "EUR",
@@ -397,16 +397,6 @@
           "key": "holo",
           "label": "Holo",
           "priceEur": 0.92
-        },
-        {
-          "key": "reverse-pokeball",
-          "label": "Poké Ball",
-          "priceEur": 1.72
-        },
-        {
-          "key": "reverse-masterball",
-          "label": "Master Ball",
-          "priceEur": 79.7
         }
       ]
     },
@@ -797,11 +787,6 @@
           "key": "normal",
           "label": "Normal",
           "priceEur": 0.13
-        },
-        {
-          "key": "reverse-pokeball",
-          "label": "Poké Ball",
-          "priceEur": null
         }
       ]
     },
@@ -1735,11 +1720,6 @@
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": null
-        },
-        {
-          "key": "reverse-masterball",
-          "label": "Master Ball",
           "priceEur": null
         }
       ]
