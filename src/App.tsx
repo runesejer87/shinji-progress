@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react'
 import { cards, exchange, pricesUpdated } from './data'
 import { currencies, useCurrency } from './currency'
-import { useCollection } from './hooks/useCollection'
+import { useCollection, type SyncStatus } from './hooks/useCollection'
+import { LockScreen } from './components/LockScreen'
 import { ProgressHeader } from './components/ProgressHeader'
 import { CardTile } from './components/CardTile'
 import { Lightbox } from './components/Lightbox'
@@ -9,6 +10,29 @@ import type { Card, Lang } from './types'
 
 type LangFilter = 'all' | Lang
 type Status = 'all' | 'missing' | 'owned'
+
+const SYNC_LABEL: Record<SyncStatus, [string, string]> = {
+  locked: ['Locked', 'bg-zinc-500'],
+  syncing: ['Syncing…', 'bg-amber-400 animate-pulse'],
+  synced: ['Synced', 'bg-emerald-400'],
+  offline: ['Offline', 'bg-zinc-500'],
+  error: ['Sync error', 'bg-rose-500'],
+}
+
+function SyncBadge({ status, onClick }: { status: SyncStatus; onClick: () => void }) {
+  const [label, dot] = SYNC_LABEL[status]
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      title="Sync now"
+      className="flex items-center gap-2 rounded-xl border border-line bg-surface px-3 py-2 text-sm font-medium text-zinc-300 hover:bg-white/8"
+    >
+      <span className={`size-2 rounded-full ${dot}`} aria-hidden />
+      {label}
+    </button>
+  )
+}
 
 function Segmented<T extends string>({ value, options, onChange }: { value: T; options: [T, string][]; onChange: (v: T) => void }) {
   return (
@@ -30,7 +54,7 @@ function Segmented<T extends string>({ value, options, onChange }: { value: T; o
 }
 
 export default function App() {
-  const { owned, toggle, exportBackup, importBackup } = useCollection()
+  const { owned, toggle, exportBackup, importBackup, status: syncStatus, unlock, sync } = useCollection()
   const [lang, setLang] = useState<LangFilter>('all')
   const [status, setStatus] = useState<Status>('all')
   const [query, setQuery] = useState('')
@@ -72,6 +96,8 @@ export default function App() {
   const scopedCards = useMemo(() => cards.filter((c) => lang === 'all' || c.lang === lang), [lang])
   const ownedInScope = scopedCards.filter((c) => owned.has(c.uid)).length
 
+  if (syncStatus === 'locked') return <LockScreen onUnlock={unlock} />
+
   return (
     <div className="mx-auto max-w-7xl px-4 pt-[max(1.5rem,env(safe-area-inset-top))] pb-16 sm:px-6">
       <header className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
@@ -81,7 +107,8 @@ export default function App() {
           </h1>
           <p className="text-sm text-zinc-500">Every physical card, English &amp; Japanese</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
+          <SyncBadge status={syncStatus} onClick={sync} />
           <label className="relative">
             <span className="sr-only">Currency</span>
             <select
@@ -189,7 +216,7 @@ export default function App() {
 
       <footer className="mt-16 text-center text-xs text-zinc-600">
         Tap a card to mark it collected · Prices: Cardmarket trend, updated {pricesUpdated.toLocaleDateString()}
-        {currency !== 'EUR' && <> · converted from EUR at ECB rate of {new Date(exchange.date).toLocaleDateString()}</>} · Progress is saved on this device
+        {currency !== 'EUR' && <> · converted from EUR at ECB rate of {new Date(exchange.date).toLocaleDateString()}</>} · Progress syncs across your devices
         <br />
         Card images via Limitless TCG. Pokémon and card artwork © Nintendo, Creatures, GAME FREAK, The Pokémon Company.
       </footer>

@@ -12,6 +12,7 @@
     "icons": "node scripts/build-icons.mjs"
   },
   "dependencies": {
+    "@vercel/blob": "^2.8.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8"
   },
