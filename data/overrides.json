@@ -1,1 +1,15 @@
-{ "exclude": [], "extraCards": [], "cards": {} }
+{
+  "exclude": [],
+  "extraCards": [],
+  "cards": {
+    "en-SP-185": {
+      "variants": [
+        {
+          "key": "holo",
+          "label": "Holo",
+          "priceEur": null
+        }
+      ]
+    }
+  }
+}

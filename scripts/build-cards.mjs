@@ -293,7 +293,9 @@ async function main() {
   for (const c of cards) {
     const o = overrides.cards?.[c.uid]
     if (o) Object.assign(c, o, o.rarityRaw ? rarityInfo(o.rarityRaw) : {})
-    c.variants = o?.variants ?? buildVariants(c, c.tcg)
+    c.variants = o?.variants
+      ? o.variants.map((v, i) => (i === 0 && v.priceEur == null ? { ...v, priceEur: c.priceEur ?? null } : v))
+      : buildVariants(c, c.tcg)
     c.priceEur = c.variants[0].priceEur
   }
 

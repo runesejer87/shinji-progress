@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-05T11:51:27.395Z",
+  "updated": "2026-10-05T11:55:30.435Z",
   "rates": {
     "date": "2026-10-02",
     "base": "EUR",
@@ -1478,8 +1478,8 @@
       "art": "en-SP-185",
       "variants": [
         {
-          "key": "normal",
-          "label": "Normal",
+          "key": "holo",
+          "label": "Holo",
           "priceEur": 38.6
         }
       ]
