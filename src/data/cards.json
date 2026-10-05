@@ -1,5 +1,5 @@
 {
-  "updated": "2026-10-05T11:55:30.435Z",
+  "updated": "2026-10-05T12:21:27.936Z",
   "rates": {
     "date": "2026-10-02",
     "base": "EUR",
@@ -1409,8 +1409,8 @@
       "art": "en-30C-40",
       "variants": [
         {
-          "key": "holo",
-          "label": "Holo",
+          "key": "normal",
+          "label": "Normal",
           "priceEur": 2.18
         }
       ]
@@ -1432,8 +1432,8 @@
       "art": "en-30C-CC30",
       "variants": [
         {
-          "key": "holo",
-          "label": "Holo",
+          "key": "normal",
+          "label": "Normal",
           "priceEur": 83.75
         }
       ]
@@ -1542,14 +1542,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/ja/M6a-34.webp",
-      "priceEur": 0.31,
+      "priceEur": null,
       "url": "https://limitlesstcg.com/cards/jp/M6a/34",
       "art": "en-30C-40",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.31
+          "priceEur": null
         }
       ]
     },
