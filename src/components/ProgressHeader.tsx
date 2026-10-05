@@ -1,8 +1,8 @@
-import type { Card } from '../types'
+import type { Item } from '../types'
 import { useCurrency } from '../currency'
 
 interface Props {
-  cards: Card[]
+  items: Item[]
   owned: Set<string>
 }
 
@@ -17,18 +17,18 @@ function Bar({ value, className = 'h-2.5' }: { value: number; className?: string
   )
 }
 
-function stats(cards: Card[], owned: Set<string>) {
-  const have = cards.filter((c) => owned.has(c.uid))
-  const sum = (list: Card[]) => list.reduce((acc, c) => acc + (c.priceEur ?? 0), 0)
-  return { have: have.length, total: cards.length, ratio: cards.length ? have.length / cards.length : 0, value: sum(have), totalValue: sum(cards) }
+function stats(items: Item[], owned: Set<string>) {
+  const have = items.filter((i) => owned.has(i.id))
+  const sum = (list: Item[]) => list.reduce((acc, i) => acc + (i.variant.priceEur ?? 0), 0)
+  return { have: have.length, total: items.length, ratio: items.length ? have.length / items.length : 0, value: sum(have), totalValue: sum(items) }
 }
 
-export function ProgressHeader({ cards, owned }: Props) {
+export function ProgressHeader({ items, owned }: Props) {
   const { format } = useCurrency()
-  const all = stats(cards, owned)
+  const all = stats(items, owned)
   const langs = [
-    { label: 'English', s: stats(cards.filter((c) => c.lang === 'en'), owned) },
-    { label: 'Japanese', s: stats(cards.filter((c) => c.lang === 'ja'), owned) },
+    { label: 'English', s: stats(items.filter((i) => i.card.lang === 'en'), owned) },
+    { label: 'Japanese', s: stats(items.filter((i) => i.card.lang === 'ja'), owned) },
   ]
 
   return (

@@ -1,12 +1,13 @@
 import { useMemo, useRef, useState } from 'react'
-import { cards, exchange, pricesUpdated } from './data'
+import { artworks, exchange, items, itemsOf, pricesUpdated } from './data'
 import { currencies, useCurrency } from './currency'
 import { useCollection, type SyncStatus } from './hooks/useCollection'
 import { LockScreen } from './components/LockScreen'
 import { ProgressHeader } from './components/ProgressHeader'
 import { CardTile } from './components/CardTile'
 import { Lightbox } from './components/Lightbox'
-import type { Card, Lang } from './types'
+import { useColumns } from './hooks/useColumns'
+import type { Artwork, Card, Lang } from './types'
 
 type LangFilter = 'all' | Lang
 type Status = 'all' | 'missing' | 'owned'
@@ -68,33 +69,37 @@ export default function App() {
     setTimeout(() => setToast(null), 2500)
   }
 
-  const groups = useMemo(() => {
+  const cols = useColumns()
+  const inLang = (c: Card) => lang === 'all' || c.lang === lang
+
+  // Rarity sections → artworks → the prints that pass the filters.
+  const sections = useMemo(() => {
     const q = query.trim().toLowerCase()
-    const visible = cards.filter(
-      (c) =>
-        (lang === 'all' || c.lang === lang) &&
-        (status === 'all' || (status === 'owned') === owned.has(c.uid)) &&
-        (!q || `${c.name} ${c.setName} ${c.code}`.toLowerCase().includes(q)),
-    )
-    const byRarity = new Map<string, Card[]>()
-    for (const c of visible) byRarity.set(c.rarity, [...(byRarity.get(c.rarity) ?? []), c])
-    return [...byRarity.entries()]
+    const showPrint = (c: Card) => {
+      if (!inLang(c)) return false
+      const ids = itemsOf(c).map((i) => i.id)
+      if (status === 'missing' && ids.every((id) => owned.has(id))) return false
+      if (status === 'owned' && !ids.some((id) => owned.has(id))) return false
+      return true
+    }
+    const bySection = new Map<string, { artwork: Artwork; prints: Card[] }[]>()
+    for (const artwork of artworks) {
+      const matchesQuery =
+        !q || artwork.prints.some((c) => `${c.name} ${c.setName} ${c.code}`.toLowerCase().includes(q))
+      const prints = matchesQuery ? artwork.prints.filter(showPrint) : []
+      if (!prints.length) continue
+      bySection.set(artwork.rarity, [...(bySection.get(artwork.rarity) ?? []), { artwork, prints }])
+    }
+    return [...bySection.entries()]
   }, [lang, status, query, owned])
 
-  const rarityTotals = useMemo(() => {
-    const scoped = cards.filter((c) => lang === 'all' || c.lang === lang)
-    const map = new Map<string, { have: number; total: number }>()
-    for (const c of scoped) {
-      const t = map.get(c.rarity) ?? { have: 0, total: 0 }
-      t.total++
-      if (owned.has(c.uid)) t.have++
-      map.set(c.rarity, t)
-    }
-    return map
-  }, [lang, owned])
+  const scopedItems = useMemo(() => items.filter((i) => lang === 'all' || i.card.lang === lang), [lang])
+  const ownedInScope = scopedItems.filter((i) => owned.has(i.id)).length
 
-  const scopedCards = useMemo(() => cards.filter((c) => lang === 'all' || c.lang === lang), [lang])
-  const ownedInScope = scopedCards.filter((c) => owned.has(c.uid)).length
+  const sectionTotals = (rarity: string) => {
+    const scoped = artworks.filter((a) => a.rarity === rarity).flatMap((a) => a.prints.filter(inLang).flatMap(itemsOf))
+    return { have: scoped.filter((i) => owned.has(i.id)).length, total: scoped.length }
+  }
 
   if (syncStatus === 'locked') return <LockScreen onUnlock={unlock} />
 
@@ -160,20 +165,20 @@ export default function App() {
         </div>
       </header>
 
-      <ProgressHeader cards={scopedCards} owned={owned} />
+      <ProgressHeader items={scopedItems} owned={owned} />
 
       <div className="sticky top-0 z-30 -mx-4 mt-4 border-b border-line/60 bg-bg/85 px-4 pt-[max(0.75rem,env(safe-area-inset-top))] pb-3 backdrop-blur-xl sm:-mx-6 sm:px-6">
         <div className="mb-2.5 flex items-center gap-3 text-xs font-semibold tabular-nums">
           <span className="text-zinc-300">
-            {ownedInScope}/{scopedCards.length}
+            {ownedInScope}/{scopedItems.length}
           </span>
           <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-white/8">
             <div
               className="h-full rounded-full bg-gradient-to-r from-accent to-accent-2 transition-[width] duration-500"
-              style={{ width: `${scopedCards.length ? (ownedInScope / scopedCards.length) * 100 : 0}%` }}
+              style={{ width: `${scopedItems.length ? (ownedInScope / scopedItems.length) * 100 : 0}%` }}
             />
           </div>
-          <span className="text-accent">{scopedCards.length ? Math.round((ownedInScope / scopedCards.length) * 100) : 0}%</span>
+          <span className="text-accent">{scopedItems.length ? Math.round((ownedInScope / scopedItems.length) * 100) : 0}%</span>
         </div>
         <div className="flex flex-col gap-2 sm:flex-row">
           <div className="flex gap-2">
@@ -191,23 +196,45 @@ export default function App() {
       </div>
 
       <main className="mt-6 space-y-12">
-        {groups.length === 0 && <p className="py-20 text-center text-zinc-500">No cards match these filters.</p>}
-        {groups.map(([rarity, list]) => {
-          const t = rarityTotals.get(rarity)
+        {sections.length === 0 && <p className="py-20 text-center text-zinc-500">No cards match these filters.</p>}
+        {sections.map(([rarity, entries]) => {
+          const t = sectionTotals(rarity)
           return (
             <section key={rarity}>
               <div className="mb-4 flex items-baseline justify-between border-b border-line pb-2">
                 <h2 className="text-lg font-bold sm:text-xl">{rarity}</h2>
-                {t && (
-                  <span className="text-sm tabular-nums text-zinc-400">
-                    {t.have}/{t.total}
-                  </span>
-                )}
+                <span className="text-sm tabular-nums text-zinc-400">
+                  {t.have}/{t.total}
+                </span>
               </div>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-7 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5">
-                {list.map((card) => (
-                  <CardTile key={card.uid} card={card} owned={owned.has(card.uid)} onToggle={toggle} onInspect={setInspecting} />
-                ))}
+              <div className="grid grid-flow-dense gap-3 sm:gap-4" style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}>
+                {entries.map(({ artwork, prints }) => {
+                  const span = Math.min(prints.length, cols)
+                  const artItems = prints.flatMap(itemsOf)
+                  const have = artItems.filter((i) => owned.has(i.id)).length
+                  return (
+                    <div
+                      key={artwork.id}
+                      className="rounded-2xl border border-line/70 bg-white/[0.025] p-2 sm:p-3"
+                      style={{ gridColumn: `span ${span} / span ${span}` }}
+                    >
+                      <div className="mb-2 flex items-baseline justify-between gap-2 px-0.5">
+                        <h3 className="truncate text-sm font-bold text-zinc-200">{artwork.name}</h3>
+                        <span className={`shrink-0 text-xs tabular-nums ${have === artItems.length ? 'text-accent' : 'text-zinc-500'}`}>
+                          {have}/{artItems.length}
+                        </span>
+                      </div>
+                      <div
+                        className="grid gap-x-3 gap-y-5 sm:gap-x-4"
+                        style={{ gridTemplateColumns: `repeat(${span}, minmax(0, 1fr))` }}
+                      >
+                        {prints.map((card) => (
+                          <CardTile key={card.uid} card={card} owned={owned} onToggle={toggle} onInspect={setInspecting} />
+                        ))}
+                      </div>
+                    </div>
+                  )
+                })}
               </div>
             </section>
           )
@@ -222,7 +249,7 @@ export default function App() {
       </footer>
 
       {inspecting && (
-        <Lightbox card={inspecting} owned={owned.has(inspecting.uid)} onToggle={toggle} onClose={() => setInspecting(null)} />
+        <Lightbox card={inspecting} owned={owned} onToggle={toggle} onClose={() => setInspecting(null)} />
       )}
       {toast && (
         <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-white px-4 py-2 text-sm font-medium text-bg shadow-xl">

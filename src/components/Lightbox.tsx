@@ -1,10 +1,11 @@
 import { useEffect } from 'react'
 import type { Card } from '../types'
 import { useCurrency } from '../currency'
+import { itemsOf } from '../data'
 
 interface Props {
   card: Card
-  owned: boolean
+  owned: Set<string>
   onToggle: (uid: string) => void
   onClose: () => void
 }
@@ -27,12 +28,12 @@ export function Lightbox({ card, owned, onToggle, onClose }: Props) {
       aria-modal="true"
       aria-label={card.name}
       onClick={onClose}
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-5 bg-black/85 p-4 backdrop-blur-md"
+      className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-4 overflow-y-auto bg-black/85 p-4 backdrop-blur-md"
     >
       <img
         src={card.image}
         alt={`${card.name} (${card.code})`}
-        className="max-h-[70dvh] w-auto max-w-full rounded-[4.5%/3.2%] shadow-2xl shadow-black"
+        className="max-h-[56dvh] w-auto max-w-full rounded-[4.5%/3.2%] shadow-2xl shadow-black"
         onClick={(e) => e.stopPropagation()}
       />
       <div className="w-full max-w-sm text-center" onClick={(e) => e.stopPropagation()}>
@@ -40,26 +41,40 @@ export function Lightbox({ card, owned, onToggle, onClose }: Props) {
         <p className="text-sm text-zinc-400">
           {card.setName} · <span className="font-mono">{card.code}</span> · {card.rarityRaw || card.rarity}
         </p>
-        <p className="mt-1 text-sm">
-          Market price <span className="font-semibold text-accent-2">{format(card.priceEur)}</span>
-        </p>
-        <div className="mt-4 flex gap-2">
-          <button
-            type="button"
-            onClick={() => onToggle(card.uid)}
-            className={`flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold transition ${
-              owned ? 'bg-white/10 text-zinc-200 hover:bg-white/15' : 'bg-accent text-bg hover:brightness-110'
-            }`}
-          >
-            {owned ? 'Remove from collection' : 'Mark as collected'}
-          </button>
+        <ul className="mt-4 space-y-1.5 text-left">
+          {itemsOf(card).map((item) => {
+            const on = owned.has(item.id)
+            return (
+              <li key={item.id}>
+                <button
+                  type="button"
+                  onClick={() => onToggle(item.id)}
+                  aria-pressed={on}
+                  className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition ${
+                    on ? 'bg-accent/15 ring-1 ring-accent/60' : 'bg-white/6 hover:bg-white/10'
+                  }`}
+                >
+                  <span
+                    className={`grid size-5 shrink-0 place-items-center rounded-md text-xs font-bold ${on ? 'bg-accent text-bg' : 'ring-1 ring-zinc-500'}`}
+                    aria-hidden
+                  >
+                    {on && '✓'}
+                  </span>
+                  <span className="flex-1 font-medium">{item.variant.label}</span>
+                  <span className="tabular-nums text-accent-2">{format(item.variant.priceEur)}</span>
+                </button>
+              </li>
+            )
+          })}
+        </ul>
+        <div className="mt-3 flex gap-2">
           <a
             href={card.url}
             target="_blank"
             rel="noreferrer"
-            className="rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold text-zinc-200 hover:bg-white/15"
+            className="flex-1 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold text-zinc-200 hover:bg-white/15"
           >
-            Details
+            Card details on Limitless
           </a>
         </div>
       </div>

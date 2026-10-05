@@ -95,16 +95,118 @@ async function verifyArtist(card) {
   return artist ?? null
 }
 
-// TCGdex ids look like "SV8-112" / "sv08-150"; we try the JP shape for JP cards.
-async function tcgdexPrice(card) {
-  if (card.lang !== 'ja') return null
+// ---------- TCGdex: variants + per-variant Cardmarket prices ----------
+
+const TCGDEX = 'https://api.tcgdex.net/v2'
+const digits = (n) => String(n).replace(/\D/g, '').replace(/^0+/, '')
+const norm = (s) => s.toLowerCase().normalize('NFKD').replace(/[^\p{L}\p{N}]/gu, '')
+
+// EN Limitless set codes (PRE, BLK…) don't match TCGdex ids (sv08.5…), so EN
+// cards are matched against TCGdex's own Shinji Kanda list by name + number.
+async function tcgdexEnIndex() {
+  const list = await get(`${TCGDEX}/en/cards?illustrator=${encodeURIComponent('Shinji Kanda')}`, { json: true })
+  const index = new Map()
+  for (const brief of list) {
+    const full = await get(`${TCGDEX}/en/cards/${encodeURIComponent(brief.id)}`, { json: true })
+    if (full) index.set(`${norm(full.name)}|${digits(full.localId)}`, full)
+  }
+  return index
+}
+
+async function tcgdexCard(card, enIndex) {
+  if (card.lang === 'en') return enIndex.get(`${norm(card.name)}|${digits(card.number)}`) ?? null
   const id = `${card.set}-${card.number.padStart(3, '0')}`
-  const data = await get(`https://api.tcgdex.net/v2/ja/cards/${encodeURIComponent(id)}`, { json: true }).catch(() => null)
-  const cm = data?.pricing?.cardmarket
+  return get(`${TCGDEX}/ja/cards/${encodeURIComponent(id)}`, { json: true }).catch(() => null)
+}
+
+const positive = (...values) => values.find((v) => typeof v === 'number' && v > 0) ?? null
+const title = (s) => s.charAt(0).toUpperCase() + s.slice(1)
+
+// Base printing first, then reverse holos, then special foils.
+function variantOrder(v) {
+  const order = ['normal', 'holo', 'reverse', 'reverse-pokeball', 'reverse-masterball']
+  const i = order.indexOf(variantKey(v))
+  return i === -1 ? order.length : i
+}
+
+function variantKey(v) {
+  return v.foil ? `${v.type}-${v.foil}` : v.type
+}
+
+function variantLabel(v) {
+  if (v.type === 'reverse' && v.foil === 'pokeball') return 'Poké Ball'
+  if (v.type === 'reverse' && v.foil === 'masterball') return 'Master Ball'
+  if (v.foil) return `${title(v.foil)} ${v.type === 'reverse' ? 'Reverse' : title(v.type)}`
+  return { normal: 'Normal', holo: 'Holo', reverse: 'Reverse Holo', firstEdition: '1st Edition', wPromo: 'W Promo' }[v.type] ?? title(v.type)
+}
+
+// Cardmarket lists normal + reverse as one product ("holo" fields = reverse);
+// special foils (Poké Ball / Master Ball) are their own product.
+function variantPrice(v, base) {
+  const cm = v.pricing?.cardmarket
   if (!cm) return null
-  const candidates = [cm.trend, cm.avg30, cm['trend-holo'], cm['avg30-holo'], cm.avg]
-  const value = candidates.find((v) => typeof v === 'number' && v > 0)
-  return value ? { priceEur: value, priceSource: 'cardmarket', tcgdexRarity: data.rarity } : null
+  if (v === base) return positive(cm.trend, cm.avg30, cm.avg7)
+  if (cm.idProduct === base.pricing?.cardmarket?.idProduct) return positive(cm['trend-holo'], cm['avg30-holo'], cm['avg7-holo'])
+  return positive(cm['trend-holo'], cm['avg30-holo'], cm.trend, cm.avg30)
+}
+
+function buildVariants(card, tcg) {
+  const detailed = (tcg?.variants_detailed ?? []).filter((v) => (v.size ?? 'standard') === 'standard')
+  if (!detailed.length) {
+    // No variant data: assume a single printing.
+    return [{ key: card.rarityRank <= 4 ? 'holo' : 'normal', label: card.rarityRank <= 4 ? 'Holo' : 'Normal', priceEur: card.priceEur ?? null }]
+  }
+  detailed.sort((a, b) => variantOrder(a) - variantOrder(b))
+  const base = detailed[0]
+  const cm = tcg.pricing?.cardmarket
+  const fallbackBase = card.priceEur ?? positive(cm?.trend, cm?.avg30, cm?.['trend-holo'], cm?.['avg30-holo'])
+  const seen = new Set()
+  return detailed
+    .map((v) => ({ key: variantKey(v), label: variantLabel(v), priceEur: variantPrice(v, base) }))
+    .filter((v) => !seen.has(v.key) && seen.add(v.key))
+    .map((v, i) => (i === 0 && v.priceEur == null ? { ...v, priceEur: fallbackBase ?? null } : v))
+}
+
+// ---------- Artwork grouping (same art across languages / reprints) ----------
+
+// Difference hash of the upper art area; same artwork scores < ~35, different > ~100.
+async function artHash(imagePath) {
+  const img = sharp(path.join(ROOT, 'public', imagePath))
+  const { width, height } = await img.metadata()
+  const buf = await img
+    .extract({ left: Math.round(width * 0.1), top: Math.round(height * 0.14), width: Math.round(width * 0.8), height: Math.round(height * 0.34) })
+    .greyscale()
+    .resize(17, 16, { fit: 'fill' })
+    .raw()
+    .toBuffer()
+  const bits = []
+  for (let y = 0; y < 16; y++) for (let x = 0; x < 16; x++) bits.push(buf[y * 17 + x] > buf[y * 17 + x + 1] ? 1 : 0)
+  return bits
+}
+
+const ART_THRESHOLD = 60
+
+async function groupArtworks(cards, manualGroups = []) {
+  const hashes = await Promise.all(cards.map((c) => artHash(c.image)))
+  const parent = cards.map((_, i) => i)
+  const find = (i) => (parent[i] === i ? i : (parent[i] = find(parent[i])))
+  const union = (a, b) => (parent[find(a)] = find(b))
+  for (let i = 0; i < cards.length; i++)
+    for (let j = i + 1; j < cards.length; j++) {
+      const d = hashes[i].reduce((n, bit, k) => n + (bit !== hashes[j][k]), 0)
+      if (d < ART_THRESHOLD) union(i, j)
+    }
+  for (const group of manualGroups) {
+    const idx = group.map((uid) => cards.findIndex((c) => c.uid === uid)).filter((i) => i >= 0)
+    for (const i of idx.slice(1)) union(idx[0], i)
+  }
+  const members = new Map()
+  cards.forEach((c, i) => members.set(find(i), [...(members.get(find(i)) ?? []), c]))
+  for (const group of members.values()) {
+    const lead = group.find((c) => c.lang === 'en') ?? group[0]
+    for (const c of group) c.art = lead.uid
+  }
+  return members.size
 }
 
 // ECB reference rates (EUR base). Falls back to the previously committed rates.
@@ -168,15 +270,17 @@ async function main() {
     if (!cards.some((c) => c.uid === extra.uid)) cards.push({ ...extra, ...rarityInfo(extra.rarityRaw) })
   }
 
-  console.log('Verifying artist + fetching prices…')
+  console.log('Verifying artist + fetching variants and prices…')
   const problems = []
+  const enIndex = await tcgdexEnIndex()
   await pool(cards, 6, async (card) => {
     if (!card.extra) {
       const artist = await verifyArtist(card)
       card.artist = artist
       if (artist && !/shinji kanda/i.test(artist)) card.drop = `artist is ${artist}`
     }
-    if (card.priceEur == null) Object.assign(card, (await tcgdexPrice(card)) ?? {})
+    card.tcg = await tcgdexCard(card, enIndex)
+    if (!card.tcg) console.warn(`  ! no TCGdex match for ${card.uid} – assuming one variant`)
   })
   for (const c of cards.filter((c) => c.drop)) console.log(`  - dropping ${c.uid}: ${c.drop}`)
   cards = cards.filter((c) => !c.drop && !(overrides.exclude ?? []).includes(c.uid))
@@ -184,6 +288,8 @@ async function main() {
   for (const c of cards) {
     const o = overrides.cards?.[c.uid]
     if (o) Object.assign(c, o, o.rarityRaw ? rarityInfo(o.rarityRaw) : {})
+    c.variants = o?.variants ?? buildVariants(c, c.tcg)
+    c.priceEur = c.variants[0].priceEur
   }
 
   if (!SKIP_IMAGES) {
@@ -199,6 +305,11 @@ async function main() {
     for (const c of cards) c.image = `/cards/${c.lang}/${c.set}-${c.number}.webp`
   }
 
+  if (!problems.length) {
+    const groups = await groupArtworks(cards, overrides.artGroups)
+    console.log(`Grouped ${cards.length} prints into ${groups} artworks`)
+  }
+
   cards.sort(
     (a, b) =>
       a.rarityRank - b.rarityRank ||
@@ -207,8 +318,8 @@ async function main() {
       a.number.localeCompare(b.number, undefined, { numeric: true }),
   )
 
-  const output = cards.map(({ uid, lang, set, setName, number, code, name, rarity, rarityRank, rarityRaw, image, priceEur, url }) => ({
-    uid, lang, set, setName, number, code, name, rarity, rarityRank, rarityRaw, image, priceEur, url,
+  const output = cards.map(({ uid, lang, set, setName, number, code, name, rarity, rarityRank, rarityRaw, image, priceEur, url, art, variants }) => ({
+    uid, lang, set, setName, number, code, name, rarity, rarityRank, rarityRaw, image, priceEur, url, art, variants,
   }))
   const rates = await exchangeRates()
   await writeFile(
@@ -219,6 +330,7 @@ async function main() {
   const noPrice = output.filter((c) => c.priceEur == null).map((c) => c.uid)
   console.log(`\nWrote ${output.length} cards (EN ${output.filter((c) => c.lang === 'en').length}, JA ${output.filter((c) => c.lang === 'ja').length})`)
   console.log(`Missing price: ${noPrice.length ? noPrice.join(', ') : 'none'}`)
+  console.log(`Variants: ${output.reduce((n, c) => n + c.variants.length, 0)} collectible items`)
   if (problems.length) {
     console.error(`\nMISSING IMAGES (${problems.length}):\n  ${problems.join('\n  ')}`)
     process.exit(1)
