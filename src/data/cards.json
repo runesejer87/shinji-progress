@@ -1,19 +1,19 @@
 {
-  "updated": "2026-10-05T12:21:27.936Z",
+  "updated": "2026-10-06T12:05:06.258Z",
   "rates": {
-    "date": "2026-10-02",
+    "date": "2026-10-05",
     "base": "EUR",
     "rates": {
       "EUR": 1,
-      "AUD": 1.6176,
-      "CAD": 1.5984,
-      "CHF": 0.9279,
-      "DKK": 7.4736,
-      "GBP": 0.85033,
-      "JPY": 176.99,
-      "NOK": 10.8315,
-      "SEK": 11.29,
-      "USD": 1.1225
+      "AUD": 1.6097,
+      "CAD": 1.5969,
+      "CHF": 0.9311,
+      "DKK": 7.4745,
+      "GBP": 0.8472,
+      "JPY": 177.28,
+      "NOK": 10.7575,
+      "SEK": 11.2525,
+      "USD": 1.1204
     }
   },
   "cards": [
@@ -338,14 +338,14 @@
       "rarityRank": 4,
       "rarityRaw": "Rare",
       "image": "/cards/en/SVI-43.webp",
-      "priceEur": 0.14,
+      "priceEur": 0.13,
       "url": "https://limitlesstcg.com/cards/SVI/43",
       "art": "en-SVI-43",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 0.14
+          "priceEur": 0.13
         },
         {
           "key": "reverse",
@@ -1118,14 +1118,14 @@
       "rarityRank": 6,
       "rarityRaw": "Common",
       "image": "/cards/en/SVI-48.webp",
-      "priceEur": 0.06,
+      "priceEur": 0.07,
       "url": "https://limitlesstcg.com/cards/SVI/48",
       "art": "en-SVI-48",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.06
+          "priceEur": 0.07
         },
         {
           "key": "reverse",
@@ -1404,14 +1404,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/30C-40.webp",
-      "priceEur": 2.18,
+      "priceEur": 1.75,
       "url": "https://limitlesstcg.com/cards/30C/40",
       "art": "en-30C-40",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 2.18
+          "priceEur": 1.75
         }
       ]
     },
@@ -1427,14 +1427,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/30C-CC30.webp",
-      "priceEur": 83.75,
+      "priceEur": 86.57,
       "url": "https://limitlesstcg.com/cards/30C/CC30",
       "art": "en-30C-CC30",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 83.75
+          "priceEur": 86.57
         }
       ]
     },
