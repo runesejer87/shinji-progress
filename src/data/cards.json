@@ -1,19 +1,19 @@
 {
-  "updated": "2026-10-13T12:46:22.227Z",
+  "updated": "2026-10-14T10:18:09.739Z",
   "rates": {
-    "date": "2026-10-12",
+    "date": "2026-10-13",
     "base": "EUR",
     "rates": {
       "EUR": 1,
-      "AUD": 1.6032,
-      "CAD": 1.5946,
+      "AUD": 1.6033,
+      "CAD": 1.5933,
       "CHF": 0.9312,
-      "DKK": 7.4748,
-      "GBP": 0.84478,
-      "JPY": 177.33,
-      "NOK": 10.6955,
-      "SEK": 11.1965,
-      "USD": 1.1181
+      "DKK": 7.4753,
+      "GBP": 0.8446,
+      "JPY": 176.91,
+      "NOK": 10.6685,
+      "SEK": 11.1698,
+      "USD": 1.1188
     }
   },
   "cards": [
@@ -338,14 +338,14 @@
       "rarityRank": 4,
       "rarityRaw": "Rare",
       "image": "/cards/en/SVI-43.webp",
-      "priceEur": 0.11,
+      "priceEur": 0.12,
       "url": "https://limitlesstcg.com/cards/SVI/43",
       "art": "en-SVI-43",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 0.11
+          "priceEur": 0.12
         },
         {
           "key": "reverse",
@@ -1118,14 +1118,14 @@
       "rarityRank": 6,
       "rarityRaw": "Common",
       "image": "/cards/en/SVI-48.webp",
-      "priceEur": 0.06,
+      "priceEur": 0.05,
       "url": "https://limitlesstcg.com/cards/SVI/48",
       "art": "en-SVI-48",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.06
+          "priceEur": 0.05
         },
         {
           "key": "reverse",
@@ -1404,14 +1404,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/30C-40.webp",
-      "priceEur": 1.32,
+      "priceEur": 1.19,
       "url": "https://limitlesstcg.com/cards/30C/40",
       "art": "en-30C-40",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 1.32
+          "priceEur": 1.19
         }
       ]
     },
@@ -1427,14 +1427,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/30C-CC30.webp",
-      "priceEur": 80.95,
+      "priceEur": 79.22,
       "url": "https://limitlesstcg.com/cards/30C/CC30",
       "art": "en-30C-CC30",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 80.95
+          "priceEur": 79.22
         }
       ]
     },
@@ -1473,14 +1473,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/SP-185.webp",
-      "priceEur": 35.02,
+      "priceEur": 31.29,
       "url": "https://limitlesstcg.com/cards/SP/185",
       "art": "en-SP-185",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 35.02
+          "priceEur": 31.29
         }
       ]
     },
