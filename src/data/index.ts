@@ -27,3 +27,20 @@ export const artworks: Artwork[] = (() => {
     })
     .sort((a, b) => a.rarityRank - b.rarityRank || a.name.localeCompare(b.name))
 })()
+
+const artworkName = new Map(artworks.map((a) => [a.id, a.name]))
+
+// Search text that Danish shops are likely to match: English Pokémon name
+// (also for Japanese prints), set and number.
+export function searchText(card: Card) {
+  if (card.lang === 'en') return `Pokemon ${card.name} ${card.setName} ${card.number}`
+  return `Pokemon ${artworkName.get(card.art) ?? card.name} Japanese ${card.set} ${card.number}`
+}
+
+// Google limited to Danish sites (cr=countryDK), or Google Shopping in DKK.
+export function googleUrl(card: Card, mode: 'web' | 'shop' = 'web') {
+  const params = new URLSearchParams({ q: searchText(card), gl: 'dk', hl: 'da' })
+  if (mode === 'web') params.set('cr', 'countryDK')
+  else params.set('tbm', 'shop')
+  return `https://www.google.com/search?${params}`
+}

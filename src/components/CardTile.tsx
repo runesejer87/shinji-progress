@@ -1,5 +1,5 @@
 import type { Card } from '../types'
-import { itemsOf } from '../data'
+import { googleUrl, itemsOf } from '../data'
 import { useCurrency } from '../currency'
 
 interface Props {
@@ -86,16 +86,34 @@ export function CardTile({ card, owned, onToggle, onInspect }: Props) {
           <p className="truncate text-sm font-semibold">{card.name}</p>
           <p className="truncate text-xs text-zinc-500">{card.setName}</p>
         </div>
-        <button
-          type="button"
-          onClick={() => onInspect(card)}
-          className="shrink-0 rounded-full p-1 text-zinc-500 hover:bg-white/10 hover:text-zinc-200"
-          aria-label={`Enlarge ${card.name}`}
-        >
-          <svg viewBox="0 0 20 20" fill="currentColor" className="size-4" aria-hidden>
-            <path d="M3 3h5v2H5v3H3V3Zm9 0h5v5h-2V5h-3V3ZM3 12h2v3h3v2H3v-5Zm12 3v-3h2v5h-5v-2h3Z" />
-          </svg>
-        </button>
+        <div className="flex shrink-0">
+          <a
+            href={googleUrl(card)}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full p-1 text-zinc-500 hover:bg-white/10 hover:text-zinc-200"
+            aria-label={`Search Danish shops for ${card.name}`}
+            title="Search Danish shops"
+          >
+            <svg viewBox="0 0 20 20" fill="currentColor" className="size-4" aria-hidden>
+              <path
+                fillRule="evenodd"
+                d="M9 3.5a5.5 5.5 0 1 0 3.2 9.98l3.66 3.66a1 1 0 0 0 1.42-1.42l-3.66-3.66A5.5 5.5 0 0 0 9 3.5ZM5.5 9a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </a>
+          <button
+            type="button"
+            onClick={() => onInspect(card)}
+            className="rounded-full p-1 text-zinc-500 hover:bg-white/10 hover:text-zinc-200"
+            aria-label={`Enlarge ${card.name}`}
+          >
+            <svg viewBox="0 0 20 20" fill="currentColor" className="size-4" aria-hidden>
+              <path d="M3 3h5v2H5v3H3V3Zm9 0h5v5h-2V5h-3V3ZM3 12h2v3h3v2H3v-5Zm12 3v-3h2v5h-5v-2h3Z" />
+            </svg>
+          </button>
+        </div>
       </figcaption>
       <div className="mt-1.5 flex items-center gap-1.5 px-0.5 text-[11px] font-medium">
         <span className="truncate rounded-md bg-white/8 px-1.5 py-0.5 font-mono text-zinc-300">{card.code}</span>

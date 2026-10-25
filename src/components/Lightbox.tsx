@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import type { Card } from '../types'
 import { useCurrency } from '../currency'
-import { itemsOf } from '../data'
+import { googleUrl, itemsOf, searchText } from '../data'
 
 interface Props {
   card: Card
@@ -12,6 +12,17 @@ interface Props {
 
 export function Lightbox({ card, owned, onToggle, onClose }: Props) {
   const { format } = useCurrency()
+  const [copied, setCopied] = useState(false)
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(searchText(card).replace(/^Pokemon /, ''))
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1500)
+    } catch {
+      // clipboard unavailable
+    }
+  }
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => e.key === 'Escape' && onClose()
     window.addEventListener('keydown', onKey)
@@ -67,14 +78,37 @@ export function Lightbox({ card, owned, onToggle, onClose }: Props) {
             )
           })}
         </ul>
-        <div className="mt-3 flex gap-2">
+        <div className="mt-3 grid grid-cols-2 gap-2">
+          <a
+            href={googleUrl(card)}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-xl bg-accent px-3 py-2.5 text-sm font-semibold text-bg hover:brightness-110"
+          >
+            Search Danish shops
+          </a>
+          <a
+            href={googleUrl(card, 'shop')}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-xl bg-white/10 px-3 py-2.5 text-sm font-semibold text-zinc-200 hover:bg-white/15"
+          >
+            Google Shopping
+          </a>
+          <button
+            type="button"
+            onClick={copy}
+            className="rounded-xl bg-white/10 px-3 py-2.5 text-sm font-semibold text-zinc-200 hover:bg-white/15"
+          >
+            {copied ? 'Copied ✓' : 'Copy name + no.'}
+          </button>
           <a
             href={card.url}
             target="_blank"
             rel="noreferrer"
-            className="flex-1 rounded-xl bg-white/10 px-4 py-2.5 text-sm font-semibold text-zinc-200 hover:bg-white/15"
+            className="rounded-xl bg-white/10 px-3 py-2.5 text-sm font-semibold text-zinc-200 hover:bg-white/15"
           >
-            Card details on Limitless
+            Limitless
           </a>
         </div>
       </div>
