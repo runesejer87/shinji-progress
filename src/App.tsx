@@ -119,7 +119,7 @@ export default function App() {
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="appearance-none rounded-xl border border-line bg-surface py-2 pr-7 pl-3 text-sm font-medium text-zinc-300 hover:bg-white/8 focus:border-accent focus:outline-none"
+              className="appearance-none rounded-xl border border-line bg-surface py-2 pr-7 pl-3 text-base font-medium text-zinc-300 sm:text-sm hover:bg-white/8 focus:border-accent focus:outline-none"
             >
               {currencies.map((c) => (
                 <option key={c} value={c}>
@@ -190,7 +190,7 @@ export default function App() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search name, set or ID…"
-            className="min-w-0 flex-1 rounded-xl border border-line bg-surface px-4 py-2 text-sm placeholder:text-zinc-500 focus:border-accent focus:outline-none"
+            className="min-w-0 flex-1 rounded-xl border border-line bg-surface px-4 py-2 text-base placeholder:text-zinc-500 sm:text-sm focus:border-accent focus:outline-none"
           />
         </div>
       </div>
