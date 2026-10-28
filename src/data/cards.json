@@ -1,19 +1,19 @@
 {
-  "updated": "2026-10-27T10:40:11.068Z",
+  "updated": "2026-10-28T11:24:34.607Z",
   "rates": {
-    "date": "2026-10-26",
+    "date": "2026-10-27",
     "base": "EUR",
     "rates": {
       "EUR": 1,
-      "AUD": 1.5927,
-      "CAD": 1.5695,
-      "CHF": 0.9243,
-      "DKK": 7.4747,
-      "GBP": 0.8382,
-      "JPY": 176.15,
-      "NOK": 10.4545,
-      "SEK": 11.1385,
-      "USD": 1.1188
+      "AUD": 1.5856,
+      "CAD": 1.5636,
+      "CHF": 0.9239,
+      "DKK": 7.4742,
+      "GBP": 0.83658,
+      "JPY": 175.97,
+      "NOK": 10.3885,
+      "SEK": 11.0795,
+      "USD": 1.115
     }
   },
   "cards": [
@@ -29,14 +29,14 @@
       "rarityRank": 0,
       "rarityRaw": "Special Art Rare",
       "image": "/cards/en/PRE-162.webp",
-      "priceEur": 184.17,
+      "priceEur": 177.21,
       "url": "https://limitlesstcg.com/cards/PRE/162",
       "art": "en-PRE-162",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 184.17
+          "priceEur": 177.21
         }
       ]
     },
@@ -52,14 +52,14 @@
       "rarityRank": 0,
       "rarityRaw": "Special Art Rare",
       "image": "/cards/ja/M2-111.webp",
-      "priceEur": 24.83,
+      "priceEur": 23.37,
       "url": "https://limitlesstcg.com/cards/jp/M2/111",
       "art": "en-MEP-24",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 24.83
+          "priceEur": 23.37
         }
       ]
     },
@@ -75,14 +75,14 @@
       "rarityRank": 0,
       "rarityRaw": "Special Art Rare",
       "image": "/cards/ja/SV8a-218.webp",
-      "priceEur": 30.85,
+      "priceEur": 30.13,
       "url": "https://limitlesstcg.com/cards/jp/SV8a/218",
       "art": "en-PRE-162",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 30.85
+          "priceEur": 30.13
         }
       ]
     },
@@ -121,14 +121,14 @@
       "rarityRank": 1,
       "rarityRaw": "Art Rare",
       "image": "/cards/en/PAL-203.webp",
-      "priceEur": 156.67,
+      "priceEur": 130.82,
       "url": "https://limitlesstcg.com/cards/PAL/203",
       "art": "en-30C-CC30",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 156.67
+          "priceEur": 130.82
         }
       ]
     },
@@ -144,14 +144,14 @@
       "rarityRank": 1,
       "rarityRaw": "Art Rare",
       "image": "/cards/ja/S12a-190.webp",
-      "priceEur": 15.55,
+      "priceEur": 16.43,
       "url": "https://limitlesstcg.com/cards/jp/S12a/190",
       "art": "en-SP-284",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 15.55
+          "priceEur": 16.43
         }
       ]
     },
@@ -190,14 +190,14 @@
       "rarityRank": 1,
       "rarityRaw": "Art Rare",
       "image": "/cards/ja/SV1a-80.webp",
-      "priceEur": 124.51,
+      "priceEur": 126.97,
       "url": "https://limitlesstcg.com/cards/jp/SV1a/80",
       "art": "en-30C-CC30",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 124.51
+          "priceEur": 126.97
         }
       ]
     },
@@ -213,14 +213,14 @@
       "rarityRank": 1,
       "rarityRaw": "Art Rare",
       "image": "/cards/ja/SV8-112.webp",
-      "priceEur": 12.54,
+      "priceEur": 12.08,
       "url": "https://limitlesstcg.com/cards/jp/SV8/112",
       "art": "en-SVP-159",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 12.54
+          "priceEur": 12.08
         }
       ]
     },
@@ -282,19 +282,19 @@
       "rarityRank": 4,
       "rarityRaw": "Rare",
       "image": "/cards/en/LOR-113.webp",
-      "priceEur": 0.14,
+      "priceEur": 0.13,
       "url": "https://limitlesstcg.com/cards/LOR/113",
       "art": "en-LOR-113",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.14
+          "priceEur": 0.13
         },
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.65
+          "priceEur": 0.62
         }
       ]
     },
@@ -310,19 +310,19 @@
       "rarityRank": 4,
       "rarityRaw": "Rare",
       "image": "/cards/en/MEW-142.webp",
-      "priceEur": 0.31,
+      "priceEur": 0.32,
       "url": "https://limitlesstcg.com/cards/MEW/142",
       "art": "en-MEW-142",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 0.31
+          "priceEur": 0.32
         },
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 2.38
+          "priceEur": 2.4
         }
       ]
     },
@@ -389,14 +389,14 @@
       "rarityRank": 4,
       "rarityRaw": "Rare",
       "image": "/cards/ja/SV2a-142.webp",
-      "priceEur": 0.35,
+      "priceEur": 0.3,
       "url": "https://limitlesstcg.com/cards/jp/SV2a/142",
       "art": "en-MEW-142",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 0.35
+          "priceEur": 0.3
         }
       ]
     },
@@ -412,19 +412,19 @@
       "rarityRank": 5,
       "rarityRaw": "Uncommon",
       "image": "/cards/en/ASR-36.webp",
-      "priceEur": 0.04,
+      "priceEur": 0.03,
       "url": "https://limitlesstcg.com/cards/ASR/36",
       "art": "en-ASR-36",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.04
+          "priceEur": 0.03
         },
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.09
+          "priceEur": 0.16
         }
       ]
     },
@@ -440,14 +440,14 @@
       "rarityRank": 5,
       "rarityRaw": "Uncommon",
       "image": "/cards/en/ASR-112.webp",
-      "priceEur": 0.07,
+      "priceEur": 0.06,
       "url": "https://limitlesstcg.com/cards/ASR/112",
       "art": "en-ASR-112",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.07
+          "priceEur": 0.06
         },
         {
           "key": "reverse",
@@ -480,7 +480,7 @@
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.24
+          "priceEur": 0.22
         }
       ]
     },
@@ -496,19 +496,19 @@
       "rarityRank": 5,
       "rarityRaw": "Uncommon",
       "image": "/cards/en/POR-14.webp",
-      "priceEur": 0.02,
+      "priceEur": 0.03,
       "url": "https://limitlesstcg.com/cards/POR/14",
       "art": "en-POR-14",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.02
+          "priceEur": 0.03
         },
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.11
+          "priceEur": 0.12
         }
       ]
     },
@@ -552,19 +552,19 @@
       "rarityRank": 5,
       "rarityRaw": "Uncommon",
       "image": "/cards/en/SFA-26.webp",
-      "priceEur": 0.05,
+      "priceEur": 0.04,
       "url": "https://limitlesstcg.com/cards/SFA/26",
       "art": "en-SFA-26",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.05
+          "priceEur": 0.04
         },
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.14
+          "priceEur": 0.13
         }
       ]
     },
@@ -592,7 +592,7 @@
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 1.39
+          "priceEur": 1.35
         }
       ]
     },
@@ -608,14 +608,14 @@
       "rarityRank": 5,
       "rarityRaw": "Uncommon",
       "image": "/cards/en/SIT-80.webp",
-      "priceEur": 0.03,
+      "priceEur": 0.02,
       "url": "https://limitlesstcg.com/cards/SIT/80",
       "art": "en-SIT-80",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.03
+          "priceEur": 0.02
         },
         {
           "key": "reverse",
@@ -636,14 +636,14 @@
       "rarityRank": 5,
       "rarityRaw": "Uncommon",
       "image": "/cards/en/TEF-43.webp",
-      "priceEur": 0.06,
+      "priceEur": 0.05,
       "url": "https://limitlesstcg.com/cards/TEF/43",
       "art": "en-TEF-43",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.06
+          "priceEur": 0.05
         },
         {
           "key": "reverse",
@@ -664,14 +664,14 @@
       "rarityRank": 5,
       "rarityRaw": "Uncommon",
       "image": "/cards/ja/M3-14.webp",
-      "priceEur": 0.09,
+      "priceEur": 0.08,
       "url": "https://limitlesstcg.com/cards/jp/M3/14",
       "art": "en-POR-14",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.09
+          "priceEur": 0.08
         }
       ]
     },
@@ -934,7 +934,7 @@
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.24
+          "priceEur": 0.21
         }
       ]
     },
@@ -950,14 +950,14 @@
       "rarityRank": 6,
       "rarityRaw": "Common",
       "image": "/cards/en/MEG-68.webp",
-      "priceEur": 0.02,
+      "priceEur": 0.03,
       "url": "https://limitlesstcg.com/cards/MEG/68",
       "art": "en-MEG-68",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.02
+          "priceEur": 0.03
         },
         {
           "key": "reverse",
@@ -978,19 +978,19 @@
       "rarityRank": 6,
       "rarityRaw": "Common",
       "image": "/cards/en/OBF-144.webp",
-      "priceEur": 0.06,
+      "priceEur": 0.07,
       "url": "https://limitlesstcg.com/cards/OBF/144",
       "art": "en-OBF-144",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.06
+          "priceEur": 0.07
         },
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.16
+          "priceEur": 0.17
         }
       ]
     },
@@ -1018,7 +1018,7 @@
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.14
+          "priceEur": 0.12
         }
       ]
     },
@@ -1074,7 +1074,7 @@
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.31
+          "priceEur": 0.35
         }
       ]
     },
@@ -1090,19 +1090,19 @@
       "rarityRank": 6,
       "rarityRaw": "Common",
       "image": "/cards/en/SSP-150.webp",
-      "priceEur": 0.04,
+      "priceEur": 0.03,
       "url": "https://limitlesstcg.com/cards/SSP/150",
       "art": "en-SSP-150",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.04
+          "priceEur": 0.03
         },
         {
           "key": "reverse",
           "label": "Reverse Holo",
-          "priceEur": 0.14
+          "priceEur": 0.16
         }
       ]
     },
@@ -1118,14 +1118,14 @@
       "rarityRank": 6,
       "rarityRaw": "Common",
       "image": "/cards/en/SVI-48.webp",
-      "priceEur": 0.07,
+      "priceEur": 0.09,
       "url": "https://limitlesstcg.com/cards/SVI/48",
       "art": "en-SVI-48",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.07
+          "priceEur": 0.09
         },
         {
           "key": "reverse",
@@ -1404,14 +1404,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/30C-40.webp",
-      "priceEur": 1.05,
+      "priceEur": 1.08,
       "url": "https://limitlesstcg.com/cards/30C/40",
       "art": "en-30C-40",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 1.05
+          "priceEur": 1.08
         }
       ]
     },
@@ -1427,14 +1427,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/30C-CC30.webp",
-      "priceEur": 74.95,
+      "priceEur": 74.88,
       "url": "https://limitlesstcg.com/cards/30C/CC30",
       "art": "en-30C-CC30",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 74.95
+          "priceEur": 74.88
         }
       ]
     },
@@ -1450,14 +1450,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/MEP-24.webp",
-      "priceEur": 22.88,
+      "priceEur": 21.47,
       "url": "https://limitlesstcg.com/cards/MEP/24",
       "art": "en-MEP-24",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 22.88
+          "priceEur": 21.47
         }
       ]
     },
@@ -1473,14 +1473,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/SP-185.webp",
-      "priceEur": 58.73,
+      "priceEur": 53.92,
       "url": "https://limitlesstcg.com/cards/SP/185",
       "art": "en-SP-185",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 58.73
+          "priceEur": 53.92
         }
       ]
     },
@@ -1496,14 +1496,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/SP-284.webp",
-      "priceEur": 10.91,
+      "priceEur": 10.42,
       "url": "https://limitlesstcg.com/cards/SP/284",
       "art": "en-SP-284",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 10.91
+          "priceEur": 10.42
         }
       ]
     },
@@ -1519,14 +1519,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/SVP-159.webp",
-      "priceEur": 15.71,
+      "priceEur": 15.43,
       "url": "https://limitlesstcg.com/cards/SVP/159",
       "art": "en-SVP-159",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 15.71
+          "priceEur": 15.43
         }
       ]
     },
