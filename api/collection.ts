@@ -69,7 +69,11 @@ export async function PUT(request: Request) {
   if (!authorized(request)) return deny()
   const incoming = parse(await request.json().catch(() => null))
   if (!incoming) return json({ error: 'Invalid body' }, 400)
-  const merged = merge(await load(), incoming)
+  const stored = await load()
+  const merged = merge(stored, incoming)
+  // Most syncs (every minute while the app is open) change nothing: skip those writes, since
+  // every Blob put counts towards the account's monthly limit.
+  if (JSON.stringify(merged) === JSON.stringify(stored)) return json({ entries: merged })
   await put(PATHNAME, JSON.stringify({ updated: Date.now(), entries: merged }), {
     access: 'private',
     allowOverwrite: true,
