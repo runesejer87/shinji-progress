@@ -1,19 +1,19 @@
 {
-  "updated": "2026-11-10T13:33:59.346Z",
+  "updated": "2026-11-11T12:46:59.144Z",
   "rates": {
-    "date": "2026-11-09",
+    "date": "2026-11-10",
     "base": "EUR",
     "rates": {
       "EUR": 1,
-      "AUD": 1.6236,
-      "CAD": 1.5785,
-      "CHF": 0.9164,
-      "DKK": 7.4753,
-      "GBP": 0.8343,
-      "JPY": 176.79,
-      "NOK": 10.5325,
-      "SEK": 10.996,
-      "USD": 1.1193
+      "AUD": 1.6244,
+      "CAD": 1.5852,
+      "CHF": 0.9203,
+      "DKK": 7.4754,
+      "GBP": 0.83545,
+      "JPY": 177.38,
+      "NOK": 10.6155,
+      "SEK": 10.991,
+      "USD": 1.1214
     }
   },
   "cards": [
@@ -338,14 +338,14 @@
       "rarityRank": 4,
       "rarityRaw": "Rare",
       "image": "/cards/en/SVI-43.webp",
-      "priceEur": 0.16,
+      "priceEur": 0.15,
       "url": "https://limitlesstcg.com/cards/SVI/43",
       "art": "en-SVI-43",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 0.16
+          "priceEur": 0.15
         },
         {
           "key": "reverse",
@@ -1118,14 +1118,14 @@
       "rarityRank": 6,
       "rarityRaw": "Common",
       "image": "/cards/en/SVI-48.webp",
-      "priceEur": 0.06,
+      "priceEur": 0.05,
       "url": "https://limitlesstcg.com/cards/SVI/48",
       "art": "en-SVI-48",
       "variants": [
         {
           "key": "normal",
           "label": "Normal",
-          "priceEur": 0.06
+          "priceEur": 0.05
         },
         {
           "key": "reverse",
@@ -1473,14 +1473,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/SP-185.webp",
-      "priceEur": 63.35,
+      "priceEur": 57.09,
       "url": "https://limitlesstcg.com/cards/SP/185",
       "art": "en-SP-185",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 63.35
+          "priceEur": 57.09
         }
       ]
     },
