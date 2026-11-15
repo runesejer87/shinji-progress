@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-14T12:16:18.809Z",
+  "updated": "2026-11-15T12:49:21.343Z",
   "rates": {
     "date": "2026-11-13",
     "base": "EUR",
@@ -338,14 +338,14 @@
       "rarityRank": 4,
       "rarityRaw": "Rare",
       "image": "/cards/en/SVI-43.webp",
-      "priceEur": 0.14,
+      "priceEur": 0.12,
       "url": "https://limitlesstcg.com/cards/SVI/43",
       "art": "en-SVI-43",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 0.14
+          "priceEur": 0.12
         },
         {
           "key": "reverse",
@@ -1473,14 +1473,14 @@
       "rarityRank": 7,
       "rarityRaw": "",
       "image": "/cards/en/SP-185.webp",
-      "priceEur": 51.05,
+      "priceEur": 43.72,
       "url": "https://limitlesstcg.com/cards/SP/185",
       "art": "en-SP-185",
       "variants": [
         {
           "key": "holo",
           "label": "Holo",
-          "priceEur": 51.05
+          "priceEur": 43.72
         }
       ]
     },
